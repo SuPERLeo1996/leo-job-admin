@@ -3,9 +3,10 @@
 docker_server_addr="leo"
 docker_project="leo-job-admin:v1"
 
-docker ps -a | grep ${docker_server_addr}/${docker_project} | awk '{print $1}'|xargs docker stop
-
-docker ps -a | grep ${docker_server_addr}/${docker_project} | awk '{print $1}'|xargs docker -f rm
+docker stop $(docker ps | grep ${docker_server_addr}/${docker_project} | awk '{print $1}') &&
+echo "容器已停止！！！！！！！！"
+docker rm -f $(docker ps -a |  grep ${docker_server_addr}/${docker_project}  | awk '{print $1}') &&
+echo "旧容器已删除！！！！！！！！"
 
 file=`cd "\`dirname $0\`";pwd`
 
